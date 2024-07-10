@@ -4,7 +4,7 @@ pragma solidity ^0.8.7;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract MyERC20Token is ERC20 {
-    address public owner;
+    address public owner=0x5B38Da6a701c568545dCfcB03FcB875f56beddC4;
 
     modifier onlyOwner() {
         require(msg.sender == owner, "Not owner");
@@ -12,8 +12,6 @@ contract MyERC20Token is ERC20 {
     }
 
     constructor(string memory name, string memory symbol) ERC20(name, symbol) {
-        owner = msg.sender;
-        _mint(msg.sender, 9* 10**uint(decimals()));
     }
 
     function MyMintToken(address to, uint256 amount) public onlyOwner {
@@ -25,13 +23,14 @@ contract MyERC20Token is ERC20 {
     }
 
     function decimals() public view virtual override returns (uint8) {
-        return 8; // Return 0 if you don't want any decimal places
+        return 2; // Return 8 decimal places
     }
 
-    function MyTransferTokens(address to, uint256 amount) public returns (bool) {
-        require(to != address(0) && to != address(this), "Transferring to the zero address");
-        require(balanceOf(msg.sender) >= amount, "Transfer amount is higher than balance!");
-        _transfer(msg.sender, to, amount);
-        return true;
+function MyTransferTokens(address to, uint256 amount) public returns (bool) {
+    require(to != address(0) && to != address(owner), "Transfer to the zero address or yourself");
+    require(balanceOf(msg.sender) >= amount, "Transfer amount exceeds balance");
+    _transfer(msg.sender, to, amount);
+    return true;
     }
+
 }
