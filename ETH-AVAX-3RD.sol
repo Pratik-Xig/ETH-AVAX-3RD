@@ -23,7 +23,7 @@ contract MyERC20Token is ERC20 {
     }
 
     function decimals() public view virtual override returns (uint8) {
-        return 2; // Return 8 decimal places
+        return 2; 
     }
 
 function MyTransferTokens(address to, uint256 amount) public returns (bool) {
