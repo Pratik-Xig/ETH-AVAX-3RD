@@ -1,6 +1,6 @@
 # MyERC20Token
 
-This project contains an ERC20 token smart contract created using OpenZeppelin's ERC20 implementation. The token includes minting, burning, redeeming and transferring functionalities, and the owner of the contract has exclusive rights to mint new tokens.
+This project contains an ERC20 token smart contract created using OpenZeppelin's ERC20 implementation. The token includes minting, burning, and transferring functionalities, and the owner of the contract has exclusive rights to mint new tokens.
 
 ## Description
 
