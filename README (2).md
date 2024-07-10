@@ -60,12 +60,12 @@ Overrides the default `decimals` function to set the token's decimal places to 2
 #### MyTransferTokens
 
 ```solidity
-function MyTransferTokens(address from, address to, uint256 amount) public returns (bool) {
-        require(to != address(0) && to != address(owner), "Transferring to the zero address");
-        require(balanceOf(from) >= amount, "Transfer amount is higher than balance!");
-        _transfer(from, to, amount);
-        return true;
-}
+function MyTransferTokens(address to, uint256 amount) public returns (bool) {
+    require(to != address(0) && to != address(owner), "Transfer to the zero address or yourself");
+    require(balanceOf(msg.sender) >= amount, "Transfer amount exceeds balance");
+    _transfer(msg.sender, to, amount);
+    return true;
+    }
 ```
 Transfers tokens from the caller to the specified address.
 
