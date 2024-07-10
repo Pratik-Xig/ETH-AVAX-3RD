@@ -1,6 +1,6 @@
 # MyERC20Token
 
-This project contains an ERC20 token smart contract created using OpenZeppelin's ERC20 implementation. The token includes minting, burning, and transferring functionalities, and the owner of the contract has exclusive rights to mint new tokens.
+This project contains an ERC20 token smart contract created using OpenZeppelin's ERC20 implementation. The token includes minting, burning, redeeming and transferring functionalities, and the owner of the contract has exclusive rights to mint new tokens.
 
 ## Description
 
@@ -12,7 +12,7 @@ The `MyERC20Token` smart contract is written in Solidity and utilizes the OpenZe
 
 ### State Variables
 
-- `address public owner`: Stores the address of the contract owner.
+- `address public owner=0x5B38Da6a701c568545dCfcB03FcB875f56beddC4`: Stores the address of the contract owner.
 
 ### Modifiers
 
@@ -23,13 +23,10 @@ The `MyERC20Token` smart contract is written in Solidity and utilizes the OpenZe
 #### constructor
 
 ```solidity
-constructor(string memory name, string memory symbol) ERC20(name, symbol) {
-    owner = msg.sender;
-    uint256 initialSupply = 10000 * 10**uint(decimals());
-    _mint(msg.sender, initialSupply);
-}
+  constructor(string memory name, string memory symbol) ERC20(name, symbol) {
+    }
 ```
-The constructor sets the contract deployer as the owner, initializes the token with a name and symbol, and mints an initial supply of 10,000 tokens to the owner.
+The constructor initializes the token with a name and symbol, and there is no initial supply of tokens to the owner.
 
 ### Functions
 
@@ -55,21 +52,19 @@ Burns a specified amount of tokens from the caller's balance.
 
 ```solidity
 function decimals() public view virtual override returns (uint8) {
-    return 0;
+    return 2;
 }
 ```
-Overrides the default `decimals` function to set the token's decimal places to 0.
+Overrides the default `decimals` function to set the token's decimal places to 2.
 
 #### MyTransferTokens
 
 ```solidity
-function MyTransferTokens(address to, uint256 amount) public returns (bool) {
-    require(to != address(0), "Transfer to the zero address");
-    require(balanceOf(msg.sender) >= amount, "Transfer amount exceeds balance");
-
-    // Perform the transfer
-    _transfer(msg.sender, to, amount);
-    return true;
+function MyTransferTokens(address from, address to, uint256 amount) public returns (bool) {
+        require(to != address(0) && to != address(owner), "Transferring to the zero address");
+        require(balanceOf(from) >= amount, "Transfer amount is higher than balance!");
+        _transfer(from, to, amount);
+        return true;
 }
 ```
 Transfers tokens from the caller to the specified address.
@@ -121,7 +116,7 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
 
 ## Authors
 
-Sujal Mahajan
+Pratik Mishra
 
 ## Contributing
 
